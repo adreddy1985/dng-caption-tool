@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dng-caption"
+version = "2.1.0"
+description = "AI-powered photo caption generator with GPS support"
+readme = "README.md"
+authors = [
+    {name = "Ari Reddy", email = "your.email@example.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "anthropic>=0.18.0",
+    "Pillow>=10.0.0",
+    "piexif>=1.1.3",
+    "geopy>=2.3.0",
+    "exifread>=3.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/dng-caption-tool"
+Documentation = "https://github.com/yourusername/dng-caption-tool/wiki"
+Repository = "https://github.com/yourusername/dng-caption-tool.git"
+Issues = "https://github.com/yourusername/dng-caption-tool/issues"
+
+[project.scripts]
+dng-caption = "dng_caption.cli:main"
+dng-caption-batch = "dng_caption.batch:main"
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
