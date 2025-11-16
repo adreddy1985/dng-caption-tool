@@ -30,7 +30,12 @@ class CaptionGenerator:
     
     STYLES = {
         'descriptive': "Write a 2-3 sentence professional caption for this image.",
-        'social': "Write an engaging social media caption with relevant hashtags.",
+        'social': """Generate an engaging, but straightforward caption for Instagram using the image and metadata. Follow these guidelines:
+- First line should be descriptive of what the subject is if known
+- Use a masculine voice and avoid excessively flowery language
+- Use any location data if available
+- Append the caption with up to 8 hashtags that are likely to drive traffic and engagement
+- Keep the tone engaging but direct""",
         'minimal': "Write a brief one-sentence caption.",
         'artistic': "Write a poetic, evocative caption.",
         'documentary': "Write a factual, journalistic caption.",
@@ -45,21 +50,25 @@ class CaptionGenerator:
             raise ValueError("API key required")
         self.client = anthropic.Anthropic(api_key=self.api_key)
     
-    def generate(self, 
+    def generate(self,
                  image_path: Path,
                  style: str = 'descriptive',
                  model: str = 'haiku',
                  location_context: Optional[str] = None) -> str:
         """Generate caption for image"""
-        
+
+        # Use Opus model for social media captions
+        if style == 'social':
+            model = 'opus'
+
         # Prepare image
         image_base64 = self._prepare_image(image_path)
-        
+
         # Build prompt
         prompt = self.STYLES.get(style, self.STYLES['descriptive'])
         if location_context:
             prompt += f"\n\n{location_context}"
-        
+
         # Generate caption
         response = self.client.messages.create(
             model=self.MODELS[model]['name'],
@@ -76,7 +85,7 @@ class CaptionGenerator:
                 ]
             }]
         )
-        
+
         return response.content[0].text.strip()
     
     def _prepare_image(self, image_path: Path) -> str:
