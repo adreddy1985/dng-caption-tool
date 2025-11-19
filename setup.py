@@ -45,6 +45,7 @@ setup(
     python_requires=">=3.9",
     install_requires=[
         "anthropic>=0.18.0",
+        "openai>=1.0.0",
         "Pillow>=10.0.0",
         "piexif>=1.1.3",
         "geopy>=2.3.0",

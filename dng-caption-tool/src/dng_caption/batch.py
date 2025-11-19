@@ -11,10 +11,15 @@ from .embed import XMPEmbedder
 
 class BatchProcessor:
     """Process multiple images efficiently"""
-    
-    def __init__(self, api_key: str = None):
-        """Initialize batch processor"""
-        self.generator = CaptionGenerator(api_key)
+
+    def __init__(self, api_key: str = None, provider: str = 'claude'):
+        """Initialize batch processor
+
+        Args:
+            api_key: API key for the selected provider
+            provider: Either 'claude' or 'openai' (default: 'claude')
+        """
+        self.generator = CaptionGenerator(api_key, provider=provider)
         self.gps_extractor = GPSExtractor()
         self.embedder = XMPEmbedder()
         self.stats = {
@@ -25,7 +30,7 @@ class BatchProcessor:
         }
     
     def process_folder(self, folder_path: Path,
-                       model: str = 'haiku',
+                       model: str = None,
                        style: str = 'descriptive',
                        skip_existing: bool = False,
                        embed: bool = True,
@@ -114,13 +119,16 @@ class BatchProcessor:
 def main():
     """CLI entry point for batch processing"""
     import argparse
-    
+
     parser = argparse.ArgumentParser(
         description='Batch process images with AI captions'
     )
     parser.add_argument('folder', help='Folder containing images')
-    parser.add_argument('--model', default='haiku',
-                       choices=['haiku', 'sonnet', 'opus'])
+    parser.add_argument('--provider', default='claude',
+                       choices=['claude', 'openai'],
+                       help='AI provider to use (default: claude)')
+    parser.add_argument('--model',
+                       help='Model to use. Claude: haiku, sonnet, opus. OpenAI: gpt-4o, gpt-4o-mini, gpt-4-turbo')
     parser.add_argument('--style', default='descriptive',
                        choices=['descriptive', 'social', 'minimal',
                                'artistic', 'documentary', 'travel'])
@@ -130,15 +138,15 @@ def main():
                        help='Create sidecars only, don\'t embed')
     parser.add_argument('--no-gps', action='store_true',
                        help='Disable GPS extraction')
-    
+
     args = parser.parse_args()
-    
+
     folder_path = Path(args.folder)
     if not folder_path.exists():
         print(f"Error: {folder_path} does not exist")
         return 1
-    
-    processor = BatchProcessor()
+
+    processor = BatchProcessor(provider=args.provider)
     stats = processor.process_folder(
         folder_path,
         model=args.model,

@@ -14,20 +14,23 @@ def main():
         description='Generate AI captions for photos with GPS support'
     )
     parser.add_argument('images', nargs='+', help='Images to process')
-    parser.add_argument('--model', default='haiku',
-                       choices=['haiku', 'sonnet', 'opus'])
+    parser.add_argument('--provider', default='claude',
+                       choices=['claude', 'openai'],
+                       help='AI provider to use (default: claude)')
+    parser.add_argument('--model',
+                       help='Model to use. Claude: haiku, sonnet, opus. OpenAI: gpt-4o, gpt-4o-mini, gpt-4-turbo')
     parser.add_argument('--style', default='descriptive',
-                       choices=['descriptive', 'social', 'minimal', 
+                       choices=['descriptive', 'social', 'minimal',
                                'artistic', 'documentary', 'travel'])
     parser.add_argument('--no-gps', action='store_true',
                        help='Disable GPS extraction')
     parser.add_argument('--embed', action='store_true',
                        help='Embed captions into JPEG files')
-    
+
     args = parser.parse_args()
-    
+
     # Initialize components
-    generator = CaptionGenerator()
+    generator = CaptionGenerator(provider=args.provider)
     gps_extractor = GPSExtractor() if not args.no_gps else None
     embedder = XMPEmbedder() if args.embed else None
     

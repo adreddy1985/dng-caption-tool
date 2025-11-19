@@ -9,13 +9,14 @@ AI-powered photo caption generator with GPS location support, XMP embedding, and
 
 ## Features
 
-- 🤖 **AI-Powered Captions** - Uses Claude (Opus/Sonnet/Haiku) models
+- 🤖 **AI-Powered Captions** - Supports both Claude (Opus/Sonnet/Haiku) and OpenAI (GPT-4o/GPT-4o-mini/GPT-4-turbo) models
 - 📍 **GPS Location Support** - Automatic extraction and geocoding
 - 🏷️ **XMP Metadata** - Industry-standard sidecar files
 - 💾 **JPEG Embedding** - Direct metadata embedding
 - 🎨 **Multiple Styles** - Descriptive, social, artistic, travel
 - 🚀 **Batch Processing** - Handle entire folders efficiently
 - 💰 **Cost Optimization** - Smart model selection
+- 🔄 **Multi-Provider** - Switch between Claude and OpenAI easily
 
 ## Installation
 
@@ -42,6 +43,8 @@ pip install -e .
 
 ## Quick Start
 
+### Using Claude (default)
+
 ```bash
 # Set your API key
 export ANTHROPIC_API_KEY="sk-ant-..."
@@ -49,12 +52,43 @@ export ANTHROPIC_API_KEY="sk-ant-..."
 # Caption a single image
 dng-caption photo.jpg
 
+# Use specific model
+dng-caption photo.jpg --model sonnet --style descriptive
+
 # Process folder with GPS
 dng-caption-batch ~/Photos/ --style travel
 
 # Embed captions into JPEGs
 dng-caption *.jpg --embed
 ```
+
+### Using OpenAI
+
+```bash
+# Set your API key
+export OPENAI_API_KEY="sk-..."
+
+# Caption with OpenAI
+dng-caption photo.jpg --provider openai
+
+# Use specific OpenAI model
+dng-caption photo.jpg --provider openai --model gpt-4o --style social
+
+# Batch process with OpenAI
+dng-caption-batch ~/Photos/ --provider openai --model gpt-4o-mini
+```
+
+### Available Models
+
+**Claude Models:**
+- `haiku` - Fast and affordable (default)
+- `sonnet` - Best balance of speed and quality
+- `opus` - Highest quality (auto-selected for social media)
+
+**OpenAI Models:**
+- `gpt-4o-mini` - Fast and affordable (default)
+- `gpt-4o` - Latest GPT-4 with vision (auto-selected for social media)
+- `gpt-4-turbo` - Previous generation GPT-4
 
 ## Documentation
 
