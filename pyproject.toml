@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dng-caption"
-version = "2.3.0"
+version = "2.3.1"
 description = "AI-powered photo caption generator with GPS support"
 readme = "README.md"
 authors = [
@@ -31,10 +31,10 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/dng-caption-tool"
-Documentation = "https://github.com/yourusername/dng-caption-tool/wiki"
-Repository = "https://github.com/yourusername/dng-caption-tool.git"
-Issues = "https://github.com/yourusername/dng-caption-tool/issues"
+Homepage = "https://github.com/adreddy1985/dng-caption-tool"
+Documentation = "https://github.com/adreddy1985/dng-caption-tool/wiki"
+Repository = "https://github.com/adreddy1985/dng-caption-tool.git"
+Issues = "https://github.com/adreddy1985/dng-caption-tool/issues"
 
 [project.scripts]
 dng-caption = "dng_caption.cli:main"
