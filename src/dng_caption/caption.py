@@ -23,7 +23,7 @@ class CaptionGenerator:
             'description': 'Best balance'
         },
         'opus': {
-            'name': 'claude-3-opus-20240229',
+            'name': 'claude-opus-4-5-20251101',
             'cost': 0.015,
             'description': 'Highest quality'
         }

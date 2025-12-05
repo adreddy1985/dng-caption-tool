@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dng-caption"
-version = "2.3.1"
+version = "2.4.0"
 description = "AI-powered photo caption generator with GPS support"
 readme = "README.md"
 authors = [
